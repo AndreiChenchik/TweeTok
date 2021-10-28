@@ -1,4 +1,4 @@
-name: Docker
+name: Build and Push into Azure Cloud
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -61,3 +61,11 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      
+      # Pass image from Package to Azure
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'myapp'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'ghcr.io/andreichenchik/tweetok:master'
+          
