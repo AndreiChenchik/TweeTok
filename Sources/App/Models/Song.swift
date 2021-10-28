@@ -1,9 +1,16 @@
+//
+//  Song.swift
+//  
+//
+//  Created by Andrei Chenchik on 28/10/21.
+//
+
 import Fluent
 import Vapor
 
-final class Todo: Model, Content {
-    static let schema = "todos"
-    
+final class Song: Model, Content {
+    static let schema = "songs"
+
     @ID(key: .id)
     var id: UUID?
 
