@@ -9,6 +9,9 @@ public func configure(_ app: Application) throws {
 
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
 
+    app.migrations.add(CreateSongs())
+    try app.autoMigrate().wait()
+
     // register routes
     try routes(app)
 }

@@ -5,17 +5,17 @@
 //  Created by Andrei Chenchik on 28/10/21.
 //
 
-//import Fluent
-//
-//struct CreateSongs: Migration {
-//    func prepare(on database: Database) -> EventLoopFuture<Void> {
-//        return database.schema("songs")
-//            .id()
-//            .field("title", .string, .required)
-//            .create()
-//    }
-//
-//    func revert(on database: Database) -> EventLoopFuture<Void> {
-//        return database.schema("songs").delete()
-//    }
-//}
+import Fluent
+
+struct CreateSongs: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema("songs")
+            .id()
+            .field("title", .string, .required)
+            .create()
+    }
+
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema("songs").delete()
+    }
+}
