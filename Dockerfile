@@ -55,6 +55,9 @@ WORKDIR /app
 # Copy built executable and any staged resources from builder
 COPY --from=build --chown=vapor:vapor /staging /app
 
+# Let app run on 80 port
+RUN setcap 'cap_net_bind_service=+ep' /app/Run
+
 # Ensure all further commands run as the vapor user
 USER vapor:vapor
 
