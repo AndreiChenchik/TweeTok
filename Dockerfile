@@ -56,6 +56,7 @@ WORKDIR /app
 COPY --from=build --chown=vapor:vapor /staging /app
 
 # Let app run on 80 port
+RUN apt install libcap2-bin
 RUN setcap 'cap_net_bind_service=+ep' /app/Run
 
 # Ensure all further commands run as the vapor user
@@ -66,7 +67,8 @@ ARG PORT=8080
 ENV PORT ${PORT}
 
 # Let Docker bind to selected port
-EXPOSE 80
+EXPOSE ${PORT}
 
 # Start the Vapor service when the image is run, default to listening on selected port in production environment
-CMD ["./Run serve --env production --hostname 0.0.0.0 --port 80"]
+ENTRYPOINT ["sh"]
+CMD ["-c", "./Run serve --env production --hostname 0.0.0.0 --port ${PORT}"]
