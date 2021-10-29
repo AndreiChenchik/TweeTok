@@ -63,8 +63,8 @@ ARG PORT=8080
 ENV PORT ${PORT}
 
 # Let Docker bind to selected port
-EXPOSE ${PORT}
+EXPOSE 80
 
 # Start the Vapor service when the image is run, default to listening on selected port in production environment
 ENTRYPOINT ["sh"]
-CMD ["-c", "./Run", "serve", "--env", "production", "--hostname", "0.0.0.0", "--port", "${PORT}"]
+CMD ["-c", "./Run", "serve", "--env", "production", "--hostname", "0.0.0.0", "--port", "80"]
