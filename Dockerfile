@@ -66,5 +66,4 @@ ENV PORT ${PORT}
 EXPOSE 80
 
 # Start the Vapor service when the image is run, default to listening on selected port in production environment
-ENTRYPOINT ["sh"]
-CMD ["-c", "./Run", "serve", "--env", "production", "--hostname", "0.0.0.0", "--port", "80"]
+CMD ["./Run serve --env production --hostname 0.0.0.0 --port 80"]
