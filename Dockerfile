@@ -44,7 +44,7 @@ FROM swift:5.5-focal-slim
 
 # Make sure all system packages are up to date.
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true && \
-    apt-get -q update && apt-get -q dist-upgrade -y && rm -r /var/lib/apt/lists/*
+    apt-get -q update && apt-get -q dist-upgrade -y && apt install -y libcap2-bin && rm -r /var/lib/apt/lists/*
 
 # Create a vapor user and group with /app as its home directory
 RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app vapor
@@ -56,7 +56,6 @@ WORKDIR /app
 COPY --from=build --chown=vapor:vapor /staging /app
 
 # Let app run on 80 port
-RUN apt install libcap2-bin
 RUN setcap 'cap_net_bind_service=+ep' /app/Run
 
 # Ensure all further commands run as the vapor user
