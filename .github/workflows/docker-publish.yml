@@ -113,7 +113,7 @@ jobs:
       # Pass image from Package to Azure
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.REGISTRY }}
+          app-name: ${{ env.APP_NAME }}
           publish-profile: ${{ steps.publish_profile.outputs.profile }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
 
