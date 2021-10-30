@@ -90,7 +90,7 @@ jobs:
                },
                {
                    "name": "DOCKER_REGISTRY_SERVER_URL",
-                   "value": "${{ env.REGISTRY }}",
+                   "value": "https://${{ env.REGISTRY }}",
                    "slotSetting": false
                },
                {
