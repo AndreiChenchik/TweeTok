@@ -16,6 +16,8 @@ on:
     branches: [ master ]
 
 env:
+  # Azure App Name
+  APP_NAME: TweeTok
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
@@ -66,9 +68,38 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       
+      # Login into Azure
+      - uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
+      # Make sure Azure App service is authentificated
+      - name: Set Web App ACR authentication
+        uses: Azure/appservice-settings@v1
+        with:
+         app-name: ${{ env.REGISTRY }}
+         app-settings-json: |
+           [
+               {
+                   "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                   "value": "${{ secrets.DOCKER_PULL_TOKEN }}",
+                   "slotSetting": false
+               },
+               {
+                   "name": "DOCKER_REGISTRY_SERVER_URL",
+                   "value": "${{ env.REGISTRY }}",
+                   "slotSetting": false
+               },
+               {
+                   "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                   "value": "${{ github.actor }}",
+                   "slotSetting": false
+               }
+           ]
+
       # Pass image from Package to Azure
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: 'TweeTok'
+          app-name: ${{ env.REGISTRY }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'ghcr.io/andreichenchik/tweetok:sha-${{ github.sha }}'
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
