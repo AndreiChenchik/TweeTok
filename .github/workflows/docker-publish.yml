@@ -69,7 +69,6 @@ jobs:
       # Pass image from Package to Azure
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: 'TweekTok'
+          app-name: 'TweeTok'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: 'ghcr.io/andreichenchik/tweetok:sha-${{ github.sha }}'
-          

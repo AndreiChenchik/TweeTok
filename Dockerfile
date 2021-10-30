@@ -3,11 +3,11 @@
 # ================================
 FROM swift:5.5-focal as build
 
-# Install OS updates and, if needed, sqlite3
+# Install OS updates and, if needed, sqlite3 and setcap
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q update \
     && apt-get -q dist-upgrade -y \
-    && apt-get install -y libsqlite3-dev \
+    && apt-get install -y libsqlite3-dev libcap2-bin \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up a build area
@@ -44,7 +44,7 @@ FROM swift:5.5-focal-slim
 
 # Make sure all system packages are up to date.
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true && \
-    apt-get -q update && apt-get -q dist-upgrade -y && apt install -y libcap2-bin && rm -r /var/lib/apt/lists/*
+    apt-get -q update && apt-get -q dist-upgrade -y && rm -r /var/lib/apt/lists/*
 
 # Create a vapor user and group with /app as its home directory
 RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app vapor
