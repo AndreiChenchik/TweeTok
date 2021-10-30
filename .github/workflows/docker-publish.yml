@@ -38,10 +38,10 @@ jobs:
     steps:
       # Extract lowercase repository name
       - name: set lower case owner name
-      run: |
-        echo "REPOSITORY_LC=${REPOSITORY,,}" >>${GITHUB_ENV}
-      env:
-        REPOSITORY: '${{ github.repository }}'
+        run: |
+          echo "REPOSITORY_LC=${REPOSITORY,,}" >>${GITHUB_ENV}
+        env:
+          REPOSITORY: '${{ github.repository }}'
 
       - name: Checkout repository
         uses: actions/checkout@v2
