@@ -6,8 +6,6 @@ name: Build and Push into Azure Cloud
 # documentation.
 
 on:
-  schedule:
-    - cron: '44 22 * * *'
   push:
     branches: [ master ]
     # Publish semver tags as releases.
